@@ -18,8 +18,8 @@ namespace UdemyRealWorldUnitTest.Web.Models
         }
 
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
 
-        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace UdemyRealWorldUnitTest.Web.Models
 
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             });
+
+            //modelBuilder.Entity<Category>().HasData(new Category {Id = 1, Name = "Kalemler"},
+            //    new Category {Id = 2, Name = "Defterler"});
 
             OnModelCreatingPartial(modelBuilder);
         }
