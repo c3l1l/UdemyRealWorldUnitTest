@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using UdemyRealWorldUnitTest.Web.Controllers;
+using UdemyRealWorldUnitTest.Web.Helpers;
 using UdemyRealWorldUnitTest.Web.Models;
 using UdemyRealWorldUnitTest.Web.Repository;
 using Xunit;
@@ -16,13 +17,14 @@ namespace UdemyRealWorldUnitTest.Test
     {
         private readonly Mock<IRepository<Product>> _mockRepo;
         private readonly ProductsApiController _controller;
-
+        private readonly Helper _helper;
         private List<Product> products;
 
         public ProductApiControllerTest()
         {
             _mockRepo = new Mock<IRepository<Product>>();
             _controller = new ProductsApiController(_mockRepo.Object);
+            _helper = new Helper();
             products = new List<Product>() { new Product
                 {
                     Id = 1,Name="Kalem",Price = 100, Stock = 50, Color = "Kirmizi"
@@ -33,6 +35,16 @@ namespace UdemyRealWorldUnitTest.Test
                 }
             };
         }
+
+        [Theory]
+        [InlineData(4, 5, 9)]
+        public void Add_SampleValues_ReturnTotal(int a, int b, int total)
+        {
+            var result = _helper.add(a, b);
+            Assert.Equal(total,result);
+
+        }
+
         [Fact]
         public async void GetProducts_ActionExecute_ReturnOkResultWithProduct()
         {
